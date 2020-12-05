@@ -12,6 +12,7 @@ typedef struct {
 
 token* generate(char* input) {
   token toks[10000];
+  const static char* digits = "0123456789";
   int pos = 0;
   for(int i = 0; input[i] != '\0'; i++) {
     token temp;
@@ -50,8 +51,6 @@ token* generate(char* input) {
         ++pos;
         break;
       default :
-        printf("\033[1;31;40mILLEGAL TOKEN: %s\033[1;31;40m", input[i]);
-        exit(1);
         break;
     }
   }
