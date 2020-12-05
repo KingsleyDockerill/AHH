@@ -3,20 +3,6 @@
 #include <stdlib.h>
 #include "lexer.h"
 
-char* stolower(char* string) {
-  char a[1000];
-  for(int i; string[i] != '\0'; i++) {
-    if((int)string[i] >= 65 && (int)string[i] <= 90 && string[i] != '\0') {
-      i = (int) i;
-      a[i] = (char) i + 32;
-    }
-    else {
-      a[i] = string[i];
-    }
-  }
-  return a;
-}
-
 int prompt() {
   int c, temp;
   char input[1000];
@@ -25,16 +11,16 @@ int prompt() {
     temp = i;
   }
   input[temp + 1] = '\0';
-  char* tempin;
-  tempin = input;
-  tempin = stolower(tempin);
-  if(strcmp(tempin, "end") == 0) {
-    return 1;
-  }
   token* toks;
   toks = generate(input);
   for(int i = 0; toks[i].name != NULL; i++) {
     printf("%s: %s, ", toks[i].name, toks[i].value.s);
+  }
+  // This line will erase any evidence of the tokens ever existing. Without the program will store the results forever
+  for(int i = 0; toks[i].name != NULL; i++) {
+    toks[i].name = NULL;
+    toks[i].value.s = NULL;
+    toks[i].type = NULL;
   }
   puts("");
   return 0;
