@@ -29,7 +29,7 @@ int main(void) {
     token* toks;
     toks = generate(input);
     for(int i = 0; toks[i].name != NULL; i++) {
-      printf("%s: %s", toks[i].name, toks[i].value.s);
+      printf("%s: %s, ", toks[i].name, toks[i].value.s);
     }
     puts("");
   }
