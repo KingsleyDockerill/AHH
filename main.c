@@ -6,6 +6,7 @@
 int prompt() {
   int c, temp;
   char input[1000];
+  printf(">");
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     input[i] = c;
     temp = i;
@@ -14,7 +15,12 @@ int prompt() {
   token* toks;
   toks = generate(input);
   for(int i = 0; toks[i].name != NULL; i++) {
-    printf("%s: %s, ", toks[i].name, toks[i].value.s);
+    if(toks[i].type == 's') {
+      printf("%s: %s, ", toks[i].name, toks[i].value.s);
+    }
+    else if(toks[i].type == 'i') {
+      printf("%s: %d, ", toks[i].name, toks[i].value.i);
+    }
   }
   // This line will erase any evidence of the tokens ever existing. Without the program will store the results forever
   for(int i = 0; toks[i].name != NULL; i++) {
