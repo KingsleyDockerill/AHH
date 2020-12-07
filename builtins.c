@@ -1,6 +1,8 @@
 #include "builtins.h"
 #include "error.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int is_try;
 
@@ -8,19 +10,45 @@ void trystatuschange(int try_) {
   is_try = try_;
 }
 
+void* print(char* toprint) {
+  puts(toprint);
+  // Don't forget to return NULL
+  return NULL;
+}
+
+char* input(char* prompt) {
+  char input[10000], c;
+  for(int i = 0; (c = getchar()) != '\n'; i++) {
+    if(i == 9999) {
+      raise("IOError", "Input length cannot be greater than 9999", is_try);
+    }
+    input[i] = c;
+  }
+  return input;
+}
+
 char* read(char* path, char* mode) {
   FILE *fp;
   fp = fopen(path, mode);
   if(fp == NULL) {
-    raise("FileExistsError", "Cannot find file", 0);
+    return raise("FileExistsError", "Cannot find file", is_try);
   }
-  char* buff;
-  fseek(fp, 0, SEEK_END); 
+  fseek(fp, 0, SEEK_END);
   int size = ftell(fp);
   fseek(fp, 0, SEEK_SET);
   char* fcontent = malloc(size);
   fread(fcontent, 1, size, fp);
   fclose(fp);
-  buff = fcontent;
-  return buff;
+  return fcontent;
+}
+
+char* write(char* path, char* mode, char* towrite) {
+  FILE *fp;
+  fp = fopen(path, mode);
+  if(fp == NULL) {
+    return raise("FileExistsError", "Cannot find file", is_try);
+  }
+  fwrite(towrite, 1, strlen(towrite), fp);
+  fclose(fp);
+  return NULL;
 }

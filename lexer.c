@@ -50,6 +50,10 @@ token* generate(char* input) {
         toks[pos] = temp;
         ++pos;
         break;
+      case ' ' :
+        continue;
+      case '\t' :
+        continue;
       default :
         if(_in(input[i], "0123456789")){
           char a[102];

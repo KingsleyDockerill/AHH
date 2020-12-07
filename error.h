@@ -1,4 +1,4 @@
 #ifndef err
 #define err
-char* raise(char* type, char* value, int is);
+char* raise(char* type, char* value, int ret);
 #endif

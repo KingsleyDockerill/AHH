@@ -3,10 +3,12 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
+// I use this for testing a lot so I'm gonn a leave this here as a comment
+#include "builtins.h"
 
 int prompt() {
   int temp;
-  char input[1000], c;
+  char input[10000], c;
   printf(">");
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     input[i] = c;
