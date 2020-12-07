@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
-#include "builtins.h"
 
 int prompt() {
   int temp;
@@ -36,7 +35,6 @@ int prompt() {
 }
 
 int main(int argc, char* argv[]) {
-  printf("%s", read("parser.h", "r"));
   while (1) {
     if(prompt()) {
       break;
