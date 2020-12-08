@@ -20,7 +20,7 @@ token* generate(char* input) {
       case '+' :
         printf("");
         token temp;
-        temp.name = "add";
+        temp.name = add;
         temp.type = 's';
         temp.value.s = "+";
         toks[pos] = temp;
@@ -28,7 +28,7 @@ token* generate(char* input) {
         break;
       case '-' :
         printf("");
-        temp.name = "sub";
+        temp.name = sub;
         temp.type = 's';
         temp.value.s = "-";
         toks[pos] = temp;
@@ -36,7 +36,7 @@ token* generate(char* input) {
         break;
       case '*' :
         printf("");
-        temp.name = "mul";
+        temp.name = mul;
         temp.type = 's';
         temp.value.s = "*";
         toks[pos] = temp;
@@ -44,7 +44,7 @@ token* generate(char* input) {
         break;
       case '/' :
         printf("");
-        temp.name = "div";
+        temp.name = div_;
         temp.type = 's';
         temp.value.s = "/";
         toks[pos] = temp;
@@ -67,7 +67,7 @@ token* generate(char* input) {
           // Why do I do this? Because in the above for loop i++ is executed too many times
           i = i - 1;
           a[tempi] = '\0';
-          temp.name = "num";
+          temp.name = num;
           temp.type = 'i';
           int b;
           sscanf(a, "%d", &b);

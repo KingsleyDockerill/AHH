@@ -1,9 +1,14 @@
-#include <stdio.h>
-
 #ifndef lex
   #define lex
+  enum tokentypes {
+    add,
+    sub,
+    mul,
+    div_,
+    num
+  };
   typedef struct {
-      char* name;
+      enum tokentypes name;
       char type;
       union {
           long long i;

@@ -19,12 +19,20 @@ void* print(char* toprint) {
 char* input(char* prompt) {
   char input[10000], c;
   for(int i = 0; (c = getchar()) != '\n'; i++) {
-    if(i == 9999) {
-      raise("IOError", "Input length cannot be greater than 9999", is_try);
+    if(i == 10000) {
+      return raise("IOError", "Input cannot exede 9999 characters in length", is_try);
     }
     input[i] = c;
   }
   return input;
+}
+
+int execute(char* cmd) {
+  return system(cmd);
+}
+
+char inchar() {
+  return getchar();
 }
 
 char* read(char* path, char* mode) {

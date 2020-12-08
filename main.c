@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
+#include "error.h"
 // I use this for testing a lot so I'm gonn a leave this here as a comment
 #include "builtins.h"
 
@@ -11,6 +12,10 @@ int prompt() {
   char input[10000], c;
   printf(">");
   for(int i = 0; (c = getchar()) != '\n'; i++) {
+    if(i == 10000) {
+      puts(raise("", "Input cannot exede 9999 characters in length", 1));
+      return 0;
+    }
     input[i] = c;
     temp = i;
   }
@@ -26,6 +31,7 @@ int prompt() {
     }
   }
   puts("");
+  printf("%d", factor(toks));
   // Clear the tokens
   for(int i = 0; toks[i].name != NULL; i++) {
     toks[i].name = NULL;
