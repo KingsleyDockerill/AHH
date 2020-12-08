@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "error.h"
+#include <stdio.h>
 
 short _in(char a, char* b) {
   for(int i = 0; b[i] != '\0'; i++) {
@@ -24,7 +25,8 @@ token* generate(char* input) {
         temp.type = 's';
         temp.value.s = "+";
         toks[pos] = temp;
-        ++pos;
+        toks[pos].null_ = " ";
+        pos++;
         break;
       case '-' :
         printf("");
@@ -32,7 +34,8 @@ token* generate(char* input) {
         temp.type = 's';
         temp.value.s = "-";
         toks[pos] = temp;
-        ++pos;
+        toks[pos].null_ = " ";
+        pos++;
         break;
       case '*' :
         printf("");
@@ -40,7 +43,8 @@ token* generate(char* input) {
         temp.type = 's';
         temp.value.s = "*";
         toks[pos] = temp;
-        ++pos;
+        toks[pos].null_ = " ";
+        pos++;
         break;
       case '/' :
         printf("");
@@ -48,7 +52,8 @@ token* generate(char* input) {
         temp.type = 's';
         temp.value.s = "/";
         toks[pos] = temp;
-        ++pos;
+        toks[pos].null_ = " ";
+        pos++;
         break;
       case ' ' :
         continue;
@@ -73,11 +78,13 @@ token* generate(char* input) {
           sscanf(a, "%d", &b);
           temp.value.i = b;
           toks[pos] = temp;
+          toks[pos].null_ = " ";
           pos++;
           break;
         }
         raise("Lexer Error", "Found illegal token", 0);
     }
   }
+  toks[pos].name = eof;
   return toks;
 }

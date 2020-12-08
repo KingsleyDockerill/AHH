@@ -3,9 +3,10 @@
 #include "error.h"
 // This is for malloc
 #include <stdlib.h>
+#include <stdio.h>
 
 node parse_;
-token* toks;
+token toks[10000];
 int tokpos = 0;
 
 // These functions are used for assigning the void pointer in the node struct
@@ -26,30 +27,27 @@ int *copy_int(int arg)
 }
 
 node factor(token tokens[]) {
-  toks = tokens;
   if(toks[tokpos].name == num) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(toks[tokpos].value.i);
+    new_node.nodes[0] = copy_int(tokens[tokpos].value.i);
     return new_node;
   }
   else if(toks[tokpos].name == add) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(+toks[tokpos].value.i);
+    new_node.nodes[0] = copy_int(+tokens[tokpos].value.i);
     return new_node;
   }
-  else if(toks[tokpos].name == sub) {
+  else if(tokens[tokpos].name == sub) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(-toks[tokpos].value.i);
+    new_node.nodes[0] = copy_int(-tokens[tokpos].value.i);
     return new_node;
   }
   else {
     raise("SyntaxError", "Unexpected token found while parsing", 0);
   }
-  node a;
-  return a;
 }
 
 node muldiv () {
@@ -70,7 +68,7 @@ node expr() {
 }
 
 node parse(token tokens[]) {
-  toks = tokens;
+  // toks = tokens;
   parse_ = expr();
   return parse_;
 }

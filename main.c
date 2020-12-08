@@ -5,7 +5,21 @@
 #include "parser.h"
 #include "error.h"
 // I use this for testing a lot so I'm gonn a leave this here as a comment
-#include "builtins.h"
+// #include "builtins.h"
+
+const char* get_tok_name(enum tokentypes tok) 
+{
+   switch (tok) 
+   {
+      case add: return "add";
+      case sub: return "sub";
+      case mul: return "mul";
+      case div_: return "div";
+      case num: return "num";
+      case eof: return "eof";
+      default: return "???";  
+   }
+}
 
 int prompt() {
   int temp;
@@ -13,7 +27,7 @@ int prompt() {
   printf(">");
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     if(i == 10000) {
-      puts(raise("", "Input cannot exede 9999 characters in length", 1));
+      puts(raise("", "Input cannot exceed 9999 characters in length", 1));
       return 0;
     }
     input[i] = c;
@@ -22,18 +36,18 @@ int prompt() {
   input[temp + 1] = '\0';
   token* toks;
   toks = generate(input);
-  for(int i = 0; toks[i].name != NULL; i++) {
+  for(int i = 0; toks[i].null_ != NULL; i++) {
     if(toks[i].type == 's') {
-      printf("%s: %s, ", toks[i].name, toks[i].value.s);
+      printf("%s: %s, ", get_tok_name(toks[i].name), toks[i].value.s);
     }
     else if(toks[i].type == 'i') {
-      printf("%s: %lld, ", toks[i].name, toks[i].value.i);
+      printf("%s: %lld, ", get_tok_name(toks[i].name), toks[i].value.i);
     }
   }
   puts("");
   printf("%d", factor(toks));
   // Clear the tokens
-  for(int i = 0; toks[i].name != NULL; i++) {
+  for(int i = 0; toks[i].null_ != NULL; i++) {
     toks[i].name = NULL;
     toks[i].value.s = NULL;
     toks[i].value.i = NULL;

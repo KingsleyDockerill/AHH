@@ -5,7 +5,8 @@
     sub,
     mul,
     div_,
-    num
+    num,
+    eof
   };
   typedef struct {
       enum tokentypes name;
@@ -17,6 +18,7 @@
           float f;
           double d;
       } value;
+      char* null_;
   } token;
   token* generate(char* input);
   short _in(char a, char* b);

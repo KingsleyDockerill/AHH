@@ -18,9 +18,10 @@ void* print(char* toprint) {
 
 char* input(char* prompt) {
   char input[10000], c;
+  // Why do this instead of gets (which is equally bad)? Because if the input is too much
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     if(i == 10000) {
-      return raise("IOError", "Input cannot exede 9999 characters in length", is_try);
+      return raise("IOError", "Input cannot exceed 9999 characters in length", is_try);
     }
     input[i] = c;
   }
