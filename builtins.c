@@ -18,7 +18,7 @@ void* print(char* toprint) {
 
 char* input(char* prompt) {
   char input[10000], c;
-  // Why do this instead of gets (which is equally bad)? Because if the input is too much
+  // Why do this instead of gets (which is equally bad)? Because if the input is too much, I can raise an error which is better than a segmentation fault
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     if(i == 10000) {
       return raise("IOError", "Input cannot exceed 9999 characters in length", is_try);
@@ -60,4 +60,25 @@ char* write(char* path, char* mode, char* towrite) {
   fwrite(towrite, 1, strlen(towrite), fp);
   fclose(fp);
   return NULL;
+}
+
+// Functions not available
+char* name() {
+  #ifndef OS
+    #ifdef _WIN32
+      return "Windows";
+    #elif _WIN64
+      return "Windows"
+    #elif __APPLE__ || __MACH__
+      return "OSX";
+    #elif __linux__
+      return "Linux";
+    #elif __FreeBSD__
+      return "FreeBSD";
+    #elif __unix || __unix__
+      return "Unix";
+    #else
+      return "Other";
+    #endif
+  #endif
 }

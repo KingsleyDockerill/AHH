@@ -4,8 +4,10 @@
 #include "lexer.h"
 #include "parser.h"
 #include "error.h"
-// I use this for testing a lot so I'm gonn a leave this here as a comment
+// I use this for testing a lot so I'm gonna leave this here as a comment
 // #include "builtins.h"
+
+#define OS name()
 
 const char* get_tok_name(enum tokentypes tok) 
 {
@@ -17,7 +19,7 @@ const char* get_tok_name(enum tokentypes tok)
       case div_: return "div";
       case num: return "num";
       case eof: return "eof";
-      default: return "???";  
+      default: return "???";
    }
 }
 
@@ -36,16 +38,8 @@ int prompt() {
   input[temp + 1] = '\0';
   token* toks;
   toks = generate(input);
-  for(int i = 0; toks[i].null_ != NULL; i++) {
-    if(toks[i].type == 's') {
-      printf("%s: %s, ", get_tok_name(toks[i].name), toks[i].value.s);
-    }
-    else if(toks[i].type == 'i') {
-      printf("%s: %lld, ", get_tok_name(toks[i].name), toks[i].value.i);
-    }
-  }
-  puts("");
-  printf("%d", factor(toks));
+  node parsed = parse(toks);
+  printf("%s\n", parsed.name);
   // Clear the tokens
   for(int i = 0; toks[i].null_ != NULL; i++) {
     toks[i].name = NULL;

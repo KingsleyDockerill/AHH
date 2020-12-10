@@ -18,57 +18,97 @@ void *copy_node(node arg)
   return mem;
 }
 
-int *copy_int(int arg)
+long long* copy_int(long long arg)
 {
-  int *mem = malloc(sizeof(*mem));
+  long long *mem = malloc(sizeof(*mem));
   if(mem)
     *mem = arg;
   return mem;
 }
 
-node factor(token tokens[]) {
+node factor() {
   if(toks[tokpos].name == num) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(tokens[tokpos].value.i);
+    new_node.nodes[0] = copy_int(toks[tokpos].value.i);
     return new_node;
   }
   else if(toks[tokpos].name == add) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(+tokens[tokpos].value.i);
+    new_node.nodes[0] = copy_int(+toks[tokpos].value.i);
     return new_node;
   }
-  else if(tokens[tokpos].name == sub) {
+  else if(toks[tokpos].name == sub) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(-tokens[tokpos].value.i);
+    new_node.nodes[0] = copy_int(-toks[tokpos].value.i);
     return new_node;
   }
   else {
     raise("SyntaxError", "Unexpected token found while parsing", 0);
   }
+  tokpos++;
+  node a;
+  return a;
 }
 
 node muldiv () {
-  node a = factor(NULL);
-  if(toks[tokpos].name == add) {
-    node b;
-    b.name = "addnode";
-    b.nodes[0] = copy_node(a);
-    a.nodes[1] = copy_node(factor(NULL));
+  node a = factor();
+  tokpos++;
+  while(toks[tokpos].null_ != NULL && (toks[tokpos].name == mul || toks[tokpos].name == div_)) {
+    if(toks[tokpos].name == mul) {
+      node b;
+      b.name = "mulnode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(factor());
+      a = b;
+    }
+    else if(toks[tokpos].name == div_) {
+      node b;
+      b.name = "divnode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(factor());
+      a = b;
+    }
+    tokpos++;
   }
   return a;
 }
 
 node expr() {
-  node num = muldiv();
-  node a;
+  node a = muldiv();
+  tokpos++;
+  while(toks[tokpos].null_ != NULL && (toks[tokpos].name == add || toks[tokpos].name == sub)) {
+    if(toks[tokpos].name == add) {
+      node b;
+      b.name = "addnode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(muldiv());
+      a = b;
+    }
+    else if(toks[tokpos].name == sub) {
+      node b;
+      b.name = "subnode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(muldiv());
+      a = b;
+    }
+    tokpos++;
+  }
+  tokpos = 0;
   return a;
 }
 
 node parse(token tokens[]) {
-  // toks = tokens;
+  // This makes the tokens global so any function can access them
+  for(int i = 0; tokens[i].null_ != NULL; i++) {
+    toks[i] = tokens[i];
+  }
   parse_ = expr();
   return parse_;
 }
