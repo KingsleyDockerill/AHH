@@ -55,7 +55,9 @@ node factor() {
 
 node muldiv () {
   node a = factor();
-  tokpos++;
+  if(toks[tokpos].null_ != NULL && (toks[tokpos].name == mul || toks[tokpos].name == div_)) {
+    tokpos++;
+  }
   while(toks[tokpos].null_ != NULL && (toks[tokpos].name == mul || toks[tokpos].name == div_)) {
     if(toks[tokpos].name == mul) {
       node b;

@@ -30,7 +30,7 @@ int prompt() {
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     if(i == 10000) {
       puts(raise("", "Input cannot exceed 9999 characters in length", 1));
-      return 0;
+      return 1;
     }
     input[i] = c;
     temp = i;
