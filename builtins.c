@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 int is_try = 0;
 
@@ -89,6 +90,29 @@ long long eval(char* a) {
   token* toks = generate(a);
   node parsed = parse(toks);
   return interpret(parsed).value.i;
+}
+
+long long chartoint(char a) {
+  return a - '0';
+}
+
+char intochar(int a) {
+  return a + '0';
+}
+
+char* inttostr(int number) {
+  char* str;
+  sprintf(str, "%d", number);
+  return str;
+}
+
+int strtoint(char* str) {
+  for(int i = 0; i < strlen(str); i++) {
+    if(!isdigit(str[i])) {
+      raise("CastError", "Cannot cast str that is not a number", is_try);
+    }
+  }
+  return atoi(str);
 }
 
 // Functions not available

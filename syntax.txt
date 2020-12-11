@@ -1,0 +1,79 @@
+These are examples of builtins and their syntax
+
+
+for i = 0 to 5 do
+  print(i)
+end
+
+Output:
+1
+2
+3
+4
+5
+
+for i = 0 to 10 by 2 do
+  print(i)
+end
+
+Output:
+2
+4
+6
+8
+10
+
+a = 5
+print(a)
+
+Output:
+5
+
+a = 0
+while(a not 6) then
+  a += 1
+end
+
+Output:
+1
+2
+3
+4
+5
+
+declare addition(a, b) does
+  return a + b
+end
+print(addition(5, 5))
+
+Output:
+10
+
+declare change(*a) does
+  a = 5
+end
+a = 0
+change(a)
+print(a)
+
+Output:
+5
+
+# Comment
+## Multi
+line
+comment ##
+
+Output:
+Nothing
+
+a = strtoint(input("Enter your age: "))
+if a >= 18 then
+  print("You can vote")
+else then
+  print("You can't vote")
+end
+
+Output:
+Enter your age: (example) 5
+You can't vote

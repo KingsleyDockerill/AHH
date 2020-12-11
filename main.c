@@ -44,10 +44,11 @@ int prompt() {
   printf("%lld\n", interpret(parsed).value.i);
   // Clear the tokens
   for(int i = 0; toks[i].null_ != NULL; i++) {
-    toks[i].name = NULL;
+    toks[i].name = eof;
     toks[i].value.s = NULL;
-    toks[i].value.i = NULL;
-    toks[i].type = NULL;
+    toks[i].value.i = 0;
+    toks[i].value.c = '\0';
+    toks[i].type = '\0';
   }
   return 0;
 }
