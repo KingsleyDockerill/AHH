@@ -31,33 +31,31 @@ node factor() {
     node new_node;
     new_node.name = "num";
     new_node.nodes[0] = copy_int(toks[tokpos].value.i);
+    tokpos++;
     return new_node;
   }
+  // For these tokpos goes too far, so I have to do tokpos - 1
   else if(toks[tokpos].name == add) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(+toks[tokpos].value.i);
+    new_node.nodes[0] = copy_int(+toks[tokpos - 1].value.i);
     return new_node;
   }
   else if(toks[tokpos].name == sub) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(-toks[tokpos].value.i);
+    new_node.nodes[0] = copy_int(-toks[tokpos - 1].value.i);
     return new_node;
   }
   else {
     raise("SyntaxError", "Unexpected token found while parsing", 0);
   }
-  tokpos++;
   node a;
   return a;
 }
 
 node muldiv () {
   node a = factor();
-  if(toks[tokpos].null_ != NULL && (toks[tokpos].name == mul || toks[tokpos].name == div_)) {
-    tokpos++;
-  }
   while(toks[tokpos].null_ != NULL && (toks[tokpos].name == mul || toks[tokpos].name == div_)) {
     if(toks[tokpos].name == mul) {
       node b;
@@ -82,7 +80,6 @@ node muldiv () {
 
 node expr() {
   node a = muldiv();
-  tokpos++;
   while(toks[tokpos].null_ != NULL && (toks[tokpos].name == add || toks[tokpos].name == sub)) {
     if(toks[tokpos].name == add) {
       node b;

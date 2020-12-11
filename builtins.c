@@ -62,6 +62,14 @@ char* write(char* path, char* mode, char* towrite) {
   return NULL;
 }
 
+int ascii(char char_) {
+  return char_;
+}
+
+char chr(int int_) {
+  return int_;
+}
+
 // Functions not available
 char* name() {
   #ifndef OS

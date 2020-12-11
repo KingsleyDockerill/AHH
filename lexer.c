@@ -56,9 +56,9 @@ token* generate(char* input) {
         pos++;
         break;
       case ' ' :
-        continue;
+        break;
       case '\t' :
-        continue;
+        break;
       default :
         if(_in(input[i], "0123456789")){
           char a[102];

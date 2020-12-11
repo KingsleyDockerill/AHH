@@ -15,8 +15,7 @@
           long long i;
           char c;
           char *s;
-          float f;
-          double d;
+          double f;
       } value;
       char* null_;
   } token;

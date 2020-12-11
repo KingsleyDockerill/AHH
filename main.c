@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
+#include "interpreter.h"
 #include "error.h"
 // I use this for testing a lot so I'm gonna leave this here as a comment
 // #include "builtins.h"
@@ -36,10 +37,9 @@ int prompt() {
     temp = i;
   }
   input[temp + 1] = '\0';
-  token* toks;
-  toks = generate(input);
+  token* toks = generate(input);
   node parsed = parse(toks);
-  printf("%s\n", parsed.name);
+  printf("%lld\n", interpret(parsed));
   // Clear the tokens
   for(int i = 0; toks[i].null_ != NULL; i++) {
     toks[i].name = NULL;
@@ -58,4 +58,3 @@ int main(int argc, char* argv[]) {
   }
   return 0;
 }
-// https://stackoverflow.com/questions/65130472/how-do-i-make-a-variable-in-a-struct-equal-to-any-value-without-a-warning-c
