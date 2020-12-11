@@ -1,4 +1,7 @@
 #include "builtins.h"
+#include "lexer.h"
+#include "parser.h"
+#include "interpreter.h"
 #include "error.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -68,6 +71,12 @@ int ascii(char char_) {
 
 char chr(int int_) {
   return int_;
+}
+
+long long eval(char* a) {
+  token* toks = generate(a);
+  node parsed = parse(toks);
+  return interpret(parsed).value.i;
 }
 
 // Functions not available

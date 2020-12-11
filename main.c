@@ -41,7 +41,7 @@ int prompt() {
   input[temp + 1] = '\0';
   token* toks = generate(input);
   node parsed = parse(toks);
-  printf("%lld\n", interpret(parsed));
+  printf("%lld\n", interpret(parsed).value.i);
   // Clear the tokens
   for(int i = 0; toks[i].null_ != NULL; i++) {
     toks[i].name = NULL;
