@@ -6,6 +6,9 @@
     mul,
     div_,
     num,
+    and,
+    or,
+    xor,
     lparen,
     rparen,
     eof

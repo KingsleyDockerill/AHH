@@ -56,8 +56,39 @@ node factor() {
   return a;
 }
 
-node muldiv () {
+node bitops() {
   node a = factor();
+  while(toks[tokpos].null_ != NULL && (toks[tokpos].name == and || toks[tokpos].name == or)) {
+    if(toks[tokpos].name == and) {
+      node b;
+      b.name = "andnode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(factor());
+      a = b;
+    }
+    else if(toks[tokpos].name == or) {
+      node b;
+      b.name = "ornode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(factor());
+      a = b;
+    }
+    else if(toks[tokpos].name == xor) {
+      node b;
+      b.name = "xornode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      b.nodes[1] = copy_node(factor());
+      a = b;
+    }
+  }
+  return a;
+}
+
+node muldiv() {
+  node a = bitops();
   while(toks[tokpos].null_ != NULL && (toks[tokpos].name == mul || toks[tokpos].name == div_)) {
     if(toks[tokpos].name == mul) {
       node b;

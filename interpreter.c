@@ -71,6 +71,33 @@ var interpret(node a) {
       return newvar;
     }
   }
+  else if(strcmp(a.name, "andnode") == 0) {
+    long long num1 = interpret(*((node*) a.nodes[0])).value.i;
+    long long num2 = interpret(*((node*) a.nodes[1])).value.i;
+    var newvar;
+    newvar.name = "and";
+    newvar.value.i = num1 & num2;
+    newvar.null_ = " ";
+    return newvar;
+  }
+  else if(strcmp(a.name, "ornode") == 0) {
+    long long num1 = interpret(*((node*) a.nodes[0])).value.i;
+    long long num2 = interpret(*((node*) a.nodes[1])).value.i;
+    var newvar;
+    newvar.name = "or";
+    newvar.value.i = num1 | num2;
+    newvar.null_ = " ";
+    return newvar;
+  }
+  else if(strcmp(a.name, "xornode") == 0) {
+    long long num1 = interpret(*((node*) a.nodes[0])).value.i;
+    long long num2 = interpret(*((node*) a.nodes[1])).value.i;
+    var newvar;
+    newvar.name = "xor";
+    newvar.value.i = num1 ^ num2;
+    newvar.null_ = " ";
+    return newvar;
+  }
   else {
     raise("NodeError", "Unexpected node", 0);
   }
