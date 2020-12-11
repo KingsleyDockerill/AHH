@@ -1,5 +1,6 @@
 #include "interpreter.h"
 #include "parser.h"
+#include "error.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -27,5 +28,8 @@ long long interpret(node a) {
     long long num1 = interpret(*((node*) a.nodes[0]));
     long long num2 = interpret(*((node*) a.nodes[1]));
     return num1 / num2;
+  }
+  else {
+    raise("NodeError", "Unexpected node", 0);
   }
 }

@@ -38,13 +38,15 @@ node factor() {
   else if(toks[tokpos].name == add) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(+toks[tokpos - 1].value.i);
+    new_node.nodes[0] = copy_int(+toks[tokpos + 1].value.i);
+    tokpos += 2;
     return new_node;
   }
   else if(toks[tokpos].name == sub) {
     node new_node;
     new_node.name = "num";
-    new_node.nodes[0] = copy_int(-toks[tokpos - 1].value.i);
+    new_node.nodes[0] = copy_int(-toks[tokpos + 1].value.i);
+    tokpos += 2;
     return new_node;
   }
   else {
@@ -73,7 +75,6 @@ node muldiv () {
       b.nodes[1] = copy_node(factor());
       a = b;
     }
-    tokpos++;
   }
   return a;
 }
