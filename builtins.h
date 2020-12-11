@@ -1,4 +1,6 @@
-void* print(char* toprint);
+#include "interpreter.h"
+
+void* print(var toprint);
 char* input(char* prompt);
 int execute(char* cmd);
 char inchar();

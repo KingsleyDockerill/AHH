@@ -7,14 +7,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-int is_try;
+int is_try = 0;
 
 void trystatuschange(int try_) {
   is_try = try_;
 }
 
-void* print(char* toprint) {
-  puts(toprint);
+void* print(var toprint) {
+  if(toprint.type == 'i') {
+    printf("%lld", toprint.value.i);
+  }
+  else if(toprint.type == 's') {
+    printf("%s", toprint.value.s);
+  }
+  else if(toprint.type == 'c') {
+    putchar(toprint.value.c);
+  }
+  else {
+    puts(raise("ArgumentError", "print got an unexpected argument type", is_try));
+  }
+  puts("");
   // Don't forget to return NULL
   return NULL;
 }
