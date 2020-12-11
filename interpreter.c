@@ -27,7 +27,13 @@ long long interpret(node a) {
   else if(strcmp(a.name, "divnode") == 0) {
     long long num1 = interpret(*((node*) a.nodes[0]));
     long long num2 = interpret(*((node*) a.nodes[1]));
-    return num1 / num2;
+    if(num2 != 0) {
+      return num1 / num2;
+    }
+    else {
+      printf("%s:\n%s\n", "ZeroDivisionError", "Returning 0");
+      return 0;
+    }
   }
   else {
     raise("NodeError", "Unexpected node", 0);
