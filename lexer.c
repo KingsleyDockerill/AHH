@@ -55,6 +55,25 @@ token* generate(char* input) {
         toks[pos].null_ = " ";
         pos++;
         break;
+      // Parentheses are a wip
+      case '(' :
+        printf("");
+        temp.name = lparen;
+        temp.type = 's';
+        temp.value.s = "(";
+        toks[pos] = temp;
+        toks[pos].null_ = " ";
+        pos++;
+        break;
+      case ')' :
+        printf("");
+        temp.name = rparen;
+        temp.type = 's';
+        temp.value.s = ")";
+        toks[pos] = temp;
+        toks[pos].null_ = " ";
+        pos++;
+        break;
       case ' ' :
         break;
       case '\t' :

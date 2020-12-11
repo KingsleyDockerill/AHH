@@ -19,6 +19,8 @@ const char* get_tok_name(enum tokentypes tok)
       case mul: return "mul";
       case div_: return "div";
       case num: return "num";
+      case lparen: return "lparen";
+      case rparen: return "rparen";
       case eof: return "eof";
       default: return "???";
    }
@@ -31,7 +33,7 @@ int prompt() {
   for(int i = 0; (c = getchar()) != '\n'; i++) {
     if(i == 10000) {
       puts(raise("", "Input cannot exceed 9999 characters in length", 1));
-      return 1;
+      return 0;
     }
     input[i] = c;
     temp = i;

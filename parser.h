@@ -8,4 +8,7 @@ typedef struct {
 void* copy_node(node arg);
 long long* copy_int(long long arg);
 node parse(token tokens[]);
+node expr();
+node muldiv();
+node factor();
 #endif

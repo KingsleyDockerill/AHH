@@ -6,6 +6,8 @@
     mul,
     div_,
     num,
+    lparen,
+    rparen,
     eof
   };
   typedef struct {

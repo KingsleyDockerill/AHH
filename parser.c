@@ -81,7 +81,7 @@ node muldiv () {
 
 node expr() {
   node a = muldiv();
-  while(toks[tokpos].null_ != NULL && (toks[tokpos].name == add || toks[tokpos].name == sub)) {
+  while(toks[tokpos].null_ != NULL && (toks[tokpos].name == add || toks[tokpos].name == sub || toks[tokpos].name == lparen)) {
     if(toks[tokpos].name == add) {
       node b;
       b.name = "addnode";
