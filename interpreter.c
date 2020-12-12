@@ -103,7 +103,6 @@ var interpret(node a) {
     newvar.name = "xor";
     newvar.value.i = num1 ^ num2;
     newvar.null_ = " ";
-    return newvar;
   }
   else if(strcmp(a.name, "functionnode") == 0) {
     var toprint = interpret(*((node*) a.nodes[0]));

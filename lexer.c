@@ -149,6 +149,7 @@ token* generate(char* input) {
           temp.name = builtin;
           temp.type = 's';
           temp.value.s = a;
+          printf("%s\n", temp.value.s);
           toks[pos] = temp;
           toks[pos].null_ = " ";
           pos++;
