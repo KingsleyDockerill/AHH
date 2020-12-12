@@ -17,7 +17,10 @@ const char* get_tok_name(enum tokentypes tok)
       case sub: return "sub";
       case mul: return "mul";
       case div_: return "div";
+      case and: return "and";
+      case or: return "or";
       case num: return "num";
+      case builtin: return "builtin";
       case lparen: return "lparen";
       case rparen: return "rparen";
       case eof: return "eof";
@@ -40,7 +43,7 @@ int prompt() {
   input[temp + 1] = '\0';
   token* toks = generate(input);
   node parsed = parse(toks);
-  printf("%lld\n", interpret(parsed).value.i);
+  interpret(parsed);
   // Clear the tokens
   for(int i = 0; toks[i].null_ != NULL; i++) {
     toks[i].name = eof;
@@ -53,22 +56,6 @@ int prompt() {
 }
 
 int main(int argc, char* argv[]) {
-  if(argc > 1) {
-    char* input;
-    input = read(argv[1], "r");
-    token* toks = generate(input);
-    node parsed = parse(toks);
-    printf("%lld\n", interpret(parsed).value.i);
-    // Clear the tokens
-    for(int i = 0; toks[i].null_ != NULL; i++) {
-      toks[i].name = eof;
-      toks[i].value.s = NULL;
-      toks[i].value.i = 0;
-      toks[i].value.c = '\0';
-      toks[i].type = '\0';
-    }
-    exit(0);
-  }
   while (1) {
     if(prompt()) {
       break;

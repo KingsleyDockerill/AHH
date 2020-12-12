@@ -24,6 +24,7 @@ var interpret(node a) {
     var newvar;
     newvar.name = "integer";
     newvar.value.i = num;
+    newvar.type = 'i';
     newvar.null_ = " ";
     return newvar;
   }
@@ -33,6 +34,7 @@ var interpret(node a) {
     var newvar;
     newvar.name = "addition";
     newvar.value.i = num1 + num2;
+    newvar.type = 'i';
     newvar.null_ = " ";
     return newvar;
   }
@@ -42,6 +44,7 @@ var interpret(node a) {
     var newvar;
     newvar.name = "subtraction";
     newvar.value.i = num1 - num2;
+    newvar.type = 'i';
     newvar.null_ = " ";
     return newvar;
   }
@@ -51,6 +54,7 @@ var interpret(node a) {
     var newvar;
     newvar.name = "multiplication";
     newvar.value.i = num1 * num2;
+    newvar.type = 'i';
     newvar.null_ = " ";
     return newvar;
   }
@@ -61,6 +65,7 @@ var interpret(node a) {
       var newvar;
       newvar.name = "addition";
       newvar.value.i = num1 + num2;
+      newvar.type = 'i';
       newvar.null_ = " ";
       return newvar;
     }
@@ -68,6 +73,7 @@ var interpret(node a) {
       printf("%s:\n%s\n", "ZeroDivisionError", "Returning 0");
       var newvar;
       newvar.value.i = 0;
+      newvar.type = 'i';
       return newvar;
     }
   }
@@ -77,6 +83,7 @@ var interpret(node a) {
     var newvar;
     newvar.name = "and";
     newvar.value.i = num1 & num2;
+    newvar.type = 'i';
     newvar.null_ = " ";
     return newvar;
   }
@@ -97,6 +104,12 @@ var interpret(node a) {
     newvar.value.i = num1 ^ num2;
     newvar.null_ = " ";
     return newvar;
+  }
+  else if(strcmp(a.name, "functionnode") == 0) {
+    var toprint = interpret(*((node*) a.nodes[0]));
+    print(toprint);
+    var nullnode;
+    return nullnode;
   }
   else {
     raise("NodeError", "Unexpected node", 0);

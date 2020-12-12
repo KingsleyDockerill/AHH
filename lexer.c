@@ -82,6 +82,12 @@ token* generate(char* input) {
         toks[pos].null_ = " ";
         pos++;
         break;
+      case '\n' :
+        printf("");
+        temp.name = eol;
+        toks[pos] = temp;
+        toks[pos].null_ = " ";
+        pos++;
       // Parentheses are a wip
       case '(' :
         printf("");
@@ -107,7 +113,7 @@ token* generate(char* input) {
         break;
       default :
         if(_in(input[i], "0123456789")){
-          char a[102];
+          char a[1000];
           int numpos = 0, tempi = 0;
           while(_in(input[i], "0123456789")) {
             a[numpos] = input[i];
@@ -128,8 +134,27 @@ token* generate(char* input) {
           pos++;
           break;
         }
-        raise("Lexer Error", "Found illegal token", 0);
-    }
+        else {
+          char a[1000];
+          int pos = 0, tempi = 0;
+          while(!_in(input[i], " \t(")) {
+            a[pos] = input[i];
+            i++;
+            pos++;
+            tempi = pos;
+          }
+          // Why do I do this? Because in the above for loop i++ is executed too many times
+          i = i - 1;
+          a[tempi] = '\0';
+          temp.name = builtin;
+          temp.type = 's';
+          temp.value.s = a;
+          toks[pos] = temp;
+          toks[pos].null_ = " ";
+          pos++;
+          break;
+        }
+      }
   }
   toks[pos].name = eof;
   return toks;

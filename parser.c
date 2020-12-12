@@ -131,7 +131,20 @@ node expr() {
     }
     tokpos++;
   }
-  tokpos = 0;
+  tokpos++;
+  return a;
+}
+
+node builtins() {
+  token builtinname = toks[tokpos - 1];
+  node a = expr();
+  if(builtinname.name == builtin) {
+    node b;
+    b.name = "functionnode";
+    b.nodes[0] = copy_node(a);
+    tokpos++;
+    a = b;
+  }
   return a;
 }
 
@@ -140,6 +153,7 @@ node parse(token tokens[]) {
   for(int i = 0; tokens[i].null_ != NULL; i++) {
     toks[i] = tokens[i];
   }
-  parse_ = expr();
+  parse_ = builtins();
+  tokpos = 0;
   return parse_;
 }

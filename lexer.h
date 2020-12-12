@@ -1,6 +1,7 @@
 #ifndef lex
   #define lex
   enum tokentypes {
+    builtin,
     add,
     sub,
     mul,
@@ -11,6 +12,7 @@
     xor,
     lparen,
     rparen,
+    eol,
     eof
   };
   typedef struct {

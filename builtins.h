@@ -13,3 +13,4 @@ long long eval(char* a);
 long long chartoint(char a);
 char inttochar(int a);
 char* inttostr(int number);
+char** getlines(char* path, char* filemode);
