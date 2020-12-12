@@ -1,7 +1,6 @@
 #ifndef lex
   #define lex
   enum tokentypes {
-    builtin,
     add,
     sub,
     mul,
@@ -10,6 +9,7 @@
     and,
     or,
     xor,
+    builtin,
     lparen,
     rparen,
     eol,

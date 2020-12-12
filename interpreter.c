@@ -108,6 +108,8 @@ var interpret(node a) {
     var toprint = interpret(*((node*) a.nodes[0]));
     print(toprint);
     var nullnode;
+    nullnode.type = 's';
+    nullnode.name = NULL;
     return nullnode;
   }
   else {

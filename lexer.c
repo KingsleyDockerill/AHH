@@ -136,22 +136,20 @@ token* generate(char* input) {
         }
         else {
           char a[1000];
-          int pos = 0, tempi = 0;
+          int pos_ = 0, tempi = 0;
           while(!_in(input[i], " \t(")) {
-            a[pos] = input[i];
+            a[pos_] = input[i];
             i++;
-            pos++;
-            tempi = pos;
+            pos_++;
+            tempi = pos_;
           }
-          // Why do I do this? Because in the above for loop i++ is executed too many times
           i = i - 1;
           a[tempi] = '\0';
           temp.name = builtin;
           temp.type = 's';
           temp.value.s = a;
-          printf("%s\n", temp.value.s);
+          temp.null_ = " ";
           toks[pos] = temp;
-          toks[pos].null_ = " ";
           pos++;
           break;
         }

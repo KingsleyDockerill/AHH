@@ -4,6 +4,7 @@
 // This is for malloc
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 node parse_;
 token toks[10000];
@@ -23,6 +24,14 @@ long long* copy_int(long long arg)
   long long *mem = malloc(sizeof(*mem));
   if(mem)
     *mem = arg;
+  return mem;
+}
+
+void* copy_string(const char *str)
+{
+  char *mem = malloc(sizeof(*mem * (strlen( str ) + 1)));
+  if (mem)
+    strcpy(mem, str);
   return mem;
 }
 
@@ -136,9 +145,17 @@ node expr() {
 }
 
 node builtins() {
-  token builtinname = toks[tokpos - 1];
-  node a = expr();
+  token builtinname = toks[tokpos];
+  node a;
+  tokpos++;
+  if(toks[tokpos].name == builtin) {
+    a = builtins();
+  }
+  else {
+    a = expr();
+  }
   if(builtinname.name == builtin) {
+    tokpos++;
     node b;
     b.name = "functionnode";
     b.nodes[0] = copy_node(a);
