@@ -112,6 +112,12 @@ var interpret(node a) {
     nullnode.name = NULL;
     return nullnode;
   }
+  else if(strcmp(a.name, "char") == 0) {
+    var chr;
+    chr.type = 'c';
+    chr.value.c = *((char*) a.nodes[0]);
+    return chr;
+  }
   else {
     raise("NodeError", "Unexpected node", 0);
   }

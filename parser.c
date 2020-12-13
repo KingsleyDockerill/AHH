@@ -27,6 +27,14 @@ long long* copy_int(long long arg)
   return mem;
 }
 
+char* copy_char(char arg)
+{
+  char *mem = malloc(sizeof(*mem));
+  if(mem)
+    *mem = arg;
+  return mem;
+}
+
 void* copy_string(const char *str)
 {
   char *mem = malloc(sizeof(*mem * (strlen( str ) + 1)));
@@ -57,6 +65,12 @@ node factor() {
     new_node.nodes[0] = copy_int(-toks[tokpos + 1].value.i);
     tokpos += 2;
     return new_node;
+  }
+  else if(toks[tokpos].name == char_) {
+    node b;
+    b.name = "char";
+    b.nodes[0] = copy_char(toks[tokpos].value.c);
+    return b;
   }
   else {
     raise("SyntaxError", "Unexpected token found while parsing", 0);
@@ -160,6 +174,15 @@ node builtins() {
     b.name = "functionnode";
     b.nodes[0] = copy_node(a);
     tokpos++;
+    a = b;
+  }
+  else if(builtinname.name == char_) {
+    tokpos++;
+    node b;
+    b.name = "char";
+    putchar(toks[tokpos].value.c);
+    puts("");
+    b.nodes[0] = copy_char(builtinname.value.c);
     a = b;
   }
   return a;

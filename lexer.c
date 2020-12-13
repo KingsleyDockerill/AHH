@@ -88,6 +88,37 @@ token* generate(char* input) {
         toks[pos] = temp;
         toks[pos].null_ = " ";
         pos++;
+      case '\'' :
+        printf("");
+        i++;
+        temp.name = char_;
+        temp.type = 'c';
+        if(input[i] == '\\') {
+          i++;
+          if(input[i] == 'n') {
+            temp.value.c = '\n';
+          }
+          else if(input[i] == 't') {
+            temp.value.c = '\t';
+          }
+          else if(input[i] == 'b') {
+            temp.value.c = '\b';
+          }
+          else {
+            raise("LexerError", "Char has no closing '", 0);
+          }
+        }
+        else {
+          temp.value.c = input[i];
+        }
+        toks[pos] = temp;
+        toks[pos].null_ = " ";
+        i++;
+        if(input[i] != '\'') {
+          raise("LexerError", "Char has no closing '", 0);
+        }
+        pos++;
+        break;
       // Parentheses are a wip
       case '(' :
         printf("");

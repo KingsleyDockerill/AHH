@@ -10,6 +10,7 @@
     or,
     xor,
     builtin,
+    char_,
     lparen,
     rparen,
     eol,
