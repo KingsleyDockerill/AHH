@@ -9,6 +9,8 @@
     and,
     or,
     xor,
+    equal,
+    dollar,
     builtin,
     char_,
     lparen,

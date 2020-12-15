@@ -82,6 +82,24 @@ token* generate(char* input) {
         toks[pos].null_ = " ";
         pos++;
         break;
+      case '=' :
+        printf("");
+        temp.name = equal;
+        temp.type = 's';
+        temp.value.s = "=";
+        toks[pos] = temp;
+        toks[pos].null_ = " ";
+        pos++;
+        break;
+      case '$' :
+        printf("");
+        temp.name = equal;
+        temp.type = 's';
+        temp.value.s = "=";
+        toks[pos] = temp;
+        toks[pos].null_ = " ";
+        pos++;
+        break;
       case '\n' :
         printf("");
         temp.name = eol;

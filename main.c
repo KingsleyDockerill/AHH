@@ -6,27 +6,9 @@
 #include "interpreter.h"
 #include "error.h"
 #include "builtins.h"
+#include "utils/dict.h"
 
 #define OS name()
-
-const char* get_tok_name(enum tokentypes tok) 
-{
-   switch (tok) 
-   {
-      case add: return "add";
-      case sub: return "sub";
-      case mul: return "mul";
-      case div_: return "div";
-      case and: return "and";
-      case or: return "or";
-      case num: return "num";
-      case builtin: return "builtin";
-      case lparen: return "lparen";
-      case rparen: return "rparen";
-      case eof: return "eof";
-      default: return "???";
-   }
-}
 
 int prompt() {
   int temp;
@@ -43,6 +25,7 @@ int prompt() {
   input[temp + 1] = '\0';
   token* toks = generate(input);
   node parsed = parse(toks);
+  init_builtins();
   interpret(parsed);
   // Clear the tokens
   for(int i = 0; toks[i].null_ != NULL; i++) {

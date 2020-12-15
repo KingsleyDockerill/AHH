@@ -6,6 +6,25 @@
 #include <stdio.h>
 #include <string.h>
 
+const char* get_tok_name(enum tokentypes tok) 
+{
+   switch (tok) 
+   {
+      case add: return "add";
+      case sub: return "sub";
+      case mul: return "mul";
+      case div_: return "div";
+      case and: return "and";
+      case or: return "or";
+      case num: return "num";
+      case builtin: return "builtin";
+      case lparen: return "lparen";
+      case rparen: return "rparen";
+      case eof: return "eof";
+      default: return "???";
+   }
+}
+
 node parse_;
 token toks[10000];
 int tokpos = 0;
@@ -43,6 +62,13 @@ void* copy_string(const char *str)
   return mem;
 }
 
+// This specifies how many arguments builtins take. Basically
+// print : 1
+// input : 1
+// And so on
+void init_builtins() {
+}
+
 node factor() {
   if(toks[tokpos].name == num) {
     node new_node;
@@ -72,6 +98,10 @@ node factor() {
     b.nodes[0] = copy_char(toks[tokpos].value.c);
     return b;
   }
+  else if(toks[tokpos].name == eof) {
+    node b;
+    return b;
+  }
   else {
     raise("SyntaxError", "Unexpected token found while parsing", 0);
   }
@@ -79,8 +109,17 @@ node factor() {
   return a;
 }
 
-node bitops() {
+node varaccess() {
   node a = factor();
+  if(toks[tokpos].name == dollar) {
+    a.name = "varaccessnode";
+    a.nodes[0] = copy_string(toks[tokpos].value.s);
+  }
+  return a;
+}
+
+node bitops() {
+  node a = varaccess();
   while(toks[tokpos].null_ != NULL && (toks[tokpos].name == and || toks[tokpos].name == or)) {
     if(toks[tokpos].name == and) {
       node b;
@@ -165,16 +204,27 @@ node builtins() {
   if(toks[tokpos].name == builtin) {
     a = builtins();
   }
+  else if(toks[tokpos].name == equal) {}
   else {
     a = expr();
   }
   if(builtinname.name == builtin) {
-    tokpos++;
-    node b;
-    b.name = "functionnode";
-    b.nodes[0] = copy_node(a);
-    tokpos++;
-    a = b;
+    if(toks[tokpos].name == equal) {
+      tokpos++;
+      node b;
+      b.name = "varassignnode";
+      b.nodes[0] = copy_string(builtinname.value.s);
+      b.nodes[1] = copy_node(builtins());
+      tokpos++;
+      a = b;
+    }
+    else {
+      node b;
+      b.name = "functionnode";
+      b.nodes[0] = copy_node(a);
+      tokpos++;
+      a = b;
+    }
   }
   else if(builtinname.name == char_) {
     tokpos++;

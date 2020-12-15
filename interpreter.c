@@ -112,6 +112,24 @@ var interpret(node a) {
     nullnode.name = NULL;
     return nullnode;
   }
+  else if(strcmp(a.name, "varassignnode") == 0) {
+    char* name = *((char**) a.nodes[0]);
+    var toassign = interpret(*((node*) a.nodes[1]));
+    int i;
+    // Get the most recently freed piece of memory
+    for(i = 0; ((var*)global_vars + i)->null_ != NULL; i++){ }
+    *((var*)global_vars + i) = toassign;
+    var nullnode;
+    nullnode.type = 's';
+    nullnode.name = NULL;
+    return nullnode;
+  }
+  else if(strcmp(a.name, "varaccessnode") == 0) {
+    int i;
+    char* name = *((char**) a.nodes[0]);
+    for(i = 0; strcmp(((var*)global_vars + i)->name, name) != 0 && ((var*)global_vars + i)->null_ != NULL; i++) { }
+    return *((var*)global_vars + i);
+  }
   else if(strcmp(a.name, "char") == 0) {
     var chr;
     chr.type = 'c';
